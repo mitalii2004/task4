@@ -5,6 +5,13 @@ Models.postModel.belongsTo(Models.userModel, {
     as: "userPost"
 })
 
+Models.userModel.hasMany(Models.postModel, {
+    foreignKey: "userId",
+    as: "postUser"
+})
+
+
+
 module.exports = {
     insert: async (req, res) => {
         try {
@@ -52,12 +59,12 @@ module.exports = {
 
     findPostByUser: async (req, res) => {
         try {
-            let response = await Models.postModel.findAll({
+            let response = await Models.userModel.findAll({
                 include: [
                     {
-                        model: Models.userModel,
+                        model: Models.postModel,
                         required: false,
-                        as: "userPost"
+                        as: "postUser"
                     }
                 ]
             })
